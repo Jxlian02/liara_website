@@ -1,0 +1,536 @@
+/* Liara — Website
+ *
+ * Bewusst eine einzige, lokale CSS-Datei: keine Webfonts, kein CDN, kein
+ * JavaScript. Nur so ist die Aussage „keine Cookies, kein Tracking" in der
+ * Datenschutzerklärung nachweisbar wahr — und es braucht kein Consent-Banner.
+ *
+ * Alle Werte sind 1:1 aus lib/theme/app_theme.dart (AppColorsData.light,
+ * AppRadius, AppSpacing, AppText) übernommen. Keine eigenen Farbtöne erfinden:
+ * die Paare sind in test/theme_test.dart auf WCAG-AA festgenagelt.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Flächen */
+  --background: #f7f3e3;   /* Ivory — Markengrund */
+  --surface: #fdfbf1;
+  --surface-alt: #ede8d5;
+
+  /* Schrift */
+  --text: #45482c;         /* Olive — dunkelster Kern der Logo-Schrift */
+  --text-muted: #5f6140;
+  --text-faint: #9aa07e;
+
+  /* Akzent — dezent, NICHT die CTA-Fläche (Ink-Fill-Regel der App) */
+  --accent: #5f6435;
+  --accent-soft: #dde3c6;
+  --selected-fill: #edf0dc;
+  --on-accent: #f7f3e3;
+
+  /* Kontraststarke Füllfläche: Ink trägt, Ivory schreibt darauf */
+  --ink: #383c23;
+  --on-ink: #f7f3e3;
+
+  --border: #e3ddc7;
+  --image-border: #c3d1a2;
+  --image-border-width: 1px;
+
+  /* Schatten — Basis #2B2F1C, Alphas wie shadowLevel1/2/Hero */
+  --shadow-1: 0 2px 8px rgba(43, 47, 28, 0.04);
+  --shadow-2: 0 3px 10px rgba(43, 47, 28, 0.05);
+  --shadow-hero: 0 8px 24px rgba(43, 47, 28, 0.12);
+
+  /* Radien — AppRadius */
+  --r-button: 32px;
+  --r-card: 20px;
+  --r-card-lg: 24px;
+  --r-input: 16px;
+  --r-affirmation: 28px;   /* SessionAffirmationCard */
+
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Lesbare Zeilenlänge für die Rechtstexte */
+  --measure: 68ch;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+img {
+  max-width: 100%;
+}
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.wrap--wide {
+  max-width: 960px;
+}
+
+/* ---------- Kopf ---------- */
+
+header.site {
+  padding: 28px 0 4px;
+}
+
+header.site .brand {
+  display: inline-block;
+  line-height: 0;
+}
+
+header.site .brand img {
+  width: 104px;
+  height: auto;
+}
+
+/* ---------- Text ---------- */
+
+main {
+  padding: 8px 0 56px;
+}
+
+h1 {
+  font-family: var(--serif);
+  font-size: 36px;
+  line-height: 1.18;
+  font-weight: 700;
+  margin: 28px 0 10px;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-family: var(--serif);
+  font-size: 23px;
+  line-height: 1.3;
+  font-weight: 700;
+  margin: 48px 0 12px;
+}
+
+/* Kleiner Oliv-Marker statt durchgezogener Trennlinie: gliedert ruhiger,
+   besonders in langen Rechtstexten. */
+h2::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 3px;
+  margin-bottom: 14px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+h3 {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  margin: 26px 0 6px;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 16px;
+}
+
+/* Zeilenlänge begrenzen — in Karten und Hero hebt das der Container auf. */
+main > .wrap > p,
+main > .wrap > ul,
+main > .wrap > ol,
+main > .wrap > address {
+  max-width: var(--measure);
+}
+
+ul,
+ol {
+  padding-left: 22px;
+}
+
+li {
+  margin-bottom: 7px;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+strong {
+  font-weight: 700;
+}
+
+.lead {
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  max-width: 34ch;
+}
+
+.updated {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+
+address {
+  font-style: normal;
+  margin-bottom: 16px;
+}
+
+/* ---------- Startseite: Hero ---------- */
+
+.hero {
+  text-align: center;
+  padding: 56px 0 8px;
+}
+
+.hero__mark {
+  width: 236px;
+  height: auto;
+  margin: 0 auto 28px;
+}
+
+/* Die eine bewusst englische Zeile der App (step_welcome.dart) */
+.hero__tagline {
+  font-family: var(--serif);
+  font-size: 30px;
+  line-height: 1.32;
+  font-weight: 500;
+  font-style: italic;
+  margin: 0 0 18px;
+}
+
+.hero__sub {
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 44ch;
+  margin: 0 auto;
+}
+
+/* ---------- Startseite: Screenshots ---------- */
+
+/* Echte Screenshots statt eines nachgebauten Geräterahmens: das Bild bringt
+   seine eigenen Rundungen mit, der Rahmen ist derselbe feine Salbeirand wie
+   auf den Bildkacheln der App (--image-border). */
+
+.shots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+  padding: 44px 0 8px;
+}
+
+.shot {
+  margin: 0;
+  text-align: center;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-card-lg);
+  border: var(--image-border-width) solid var(--image-border);
+  box-shadow: var(--shadow-hero);
+  background: var(--surface);
+}
+
+.shot figcaption {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ---------- Bausteine ---------- */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 8px 0 8px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card-lg);
+  box-shadow: var(--shadow-2);
+  padding: 24px;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card > :last-child {
+  margin-bottom: 0;
+}
+
+.card p {
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* Ruhige Akzentfläche — helle Lasur, keine Tonverschiebung ins Greige. */
+.panel {
+  background: var(--accent-soft);
+  border-radius: var(--r-card-lg);
+  padding: 30px 32px;
+  margin: 40px 0;
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+.panel h2::before {
+  background: var(--ink);
+  opacity: 0.35;
+}
+
+.panel > :last-child {
+  margin-bottom: 0;
+}
+
+/* Hinweisblock in den Rechtstexten */
+.callout {
+  background: var(--accent-soft);
+  border-radius: var(--r-card);
+  padding: 20px 24px;
+  margin: 0 0 26px;
+  max-width: none;
+}
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+/* Kontraststarke Fläche: Ink füllt, Ivory schreibt — Ink-Fill-Regel. */
+.cta {
+  background: var(--ink);
+  color: var(--on-ink);
+  border-radius: var(--r-card-lg);
+  padding: 40px 32px;
+  margin: 48px 0 8px;
+  text-align: center;
+}
+
+.cta h2 {
+  color: var(--on-ink);
+  margin: 0 0 10px;
+}
+
+.cta h2::before {
+  display: none;
+}
+
+.cta p {
+  color: rgba(247, 243, 227, 0.78);
+  max-width: 46ch;
+  margin: 0 auto 24px;
+}
+
+/* Nur Fließtext-Links im dunklen Block — der Button bringt seine eigene
+   Farbgebung mit (Ivory-Fläche, Ink-Schrift). Ohne :not(.btn) gewinnt diese
+   Regel über `.btn` und das Label wird ivory auf ivory. */
+.cta a:not(.btn) {
+  color: var(--on-ink);
+}
+
+.btn {
+  display: inline-block;
+  background: var(--on-ink);
+  color: var(--ink);
+  border-radius: var(--r-button);
+  padding: 14px 30px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn:hover {
+  color: var(--ink);
+  opacity: 0.9;
+}
+
+/* FAQ-Karten auf der Support-Seite */
+.faq {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.faq .card h3 {
+  font-size: 18px;
+}
+
+.faq .card p,
+.faq .card ul {
+  color: var(--text);
+}
+
+/* Tabellen dürfen als einzige horizontal scrollen, damit die Seite es nie tut. */
+.table-scroll {
+  overflow-x: auto;
+  margin: 0 0 26px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  background: var(--surface);
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 560px;
+  font-size: 15px;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  font-family: var(--serif);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---------- Fuß ---------- */
+
+footer.site {
+  border-top: 1px solid var(--border);
+  padding: 30px 0 56px;
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+footer.site nav {
+  margin-bottom: 10px;
+  line-height: 2;
+}
+
+footer.site a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+footer.site .sep {
+  padding: 0 8px;
+  color: var(--text-muted);
+}
+
+/* ---------- Schmale Displays ---------- */
+
+@media (max-width: 760px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .shots {
+    grid-template-columns: repeat(3, 66%);
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 18px;
+    padding-bottom: 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .shot {
+    scroll-snap-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 16px;
+  }
+
+  .wrap {
+    padding: 0 18px;
+  }
+
+  h1 {
+    font-size: 29px;
+  }
+
+  h2 {
+    font-size: 21px;
+  }
+
+  .hero {
+    padding-top: 36px;
+  }
+
+  .hero__mark {
+    width: 186px;
+  }
+
+  .hero__tagline {
+    font-size: 25px;
+  }
+
+  .lead {
+    font-size: 18px;
+  }
+
+  .panel,
+  .cta {
+    padding: 26px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
