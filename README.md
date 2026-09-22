@@ -87,6 +87,55 @@ ist ein Impressumsservice gemacht — Voraussetzung ist, dass der Dienst zur
 Entgegennahme von Post und Zustellungen beauftragt ist und der Vertrag läuft.
 Endet er, fällt die Grundlage der Angabe weg und die Adresse muss ersetzt werden.
 
+## Geltungsbereich DE · AT · CH
+
+Die App erscheint im App Store in **Deutschland, Österreich und der Schweiz**.
+Die Rechtstexte tragen alle drei Länder in *einem* deutschsprachigen Dokument —
+bewusst ohne Länderversionen, die auseinanderlaufen würden.
+
+**Österreich braucht keine eigenen Angaben.** Der Anbieter ist in Deutschland
+niedergelassen, damit gilt das Herkunftslandprinzip der E-Commerce-Richtlinie
+(in Österreich § 20 ECG): kein österreichisches ECG-/Mediengesetz-Impressum,
+keine WKO- oder Gewerbeordnungs-Angaben. Die DSGVO gilt ohnehin identisch, und
+„Beschwerde bei **einer** Datenschutz-Aufsichtsbehörde“ in Datenschutz
+Abschnitt 2 deckt die österreichische DSB mit ab — **DON'T** das nicht zu einer
+Behördenliste ausbauen, die Aufzählung wäre enger als die offene Formulierung.
+
+**Die Schweiz ist nicht EU/EWR** — weder Herkunftslandprinzip noch DSGVO greifen
+dort als maßgebliches Regime. Deshalb:
+
+- `datenschutz.html` Abschnitt 13 ordnet die Bearbeitung nach **revDSG** ein
+  (Rechte nach Art. 25/28/32, besonders schützenswerte Personendaten nach
+  Art. 5 lit. c, Aufsicht EDÖB in Bern).
+- Abschnitte 3 und 7 nennen neben dem EU-US auch das **Swiss-US Data Privacy
+  Framework**. Die drei Stellen hängen zusammen — wird eine geändert, müssen
+  die anderen mit.
+- `nutzungsbedingungen.html` Abschnitt 12: **Art. 120 Abs. 2 IPRG** schließt bei
+  Konsumentenverträgen eine Rechtswahl ganz aus. Der allgemeine Vorbehalt
+  zwingender Verbraucherschutzvorschriften (Rom I Art. 6 Abs. 2, richtig für AT)
+  trägt für die Schweiz nicht weit genug, deshalb steht das dort ausdrücklich.
+- `nutzungsbedingungen.html` Abschnitt 8 führt die Notfallnummern **je Land**.
+  `112` gilt in allen dreien, `0800 111 0 111` und `116 117` nur in Deutschland.
+  Die Nummern stehen unabhängig von den freigeschalteten Store-Ländern da: die
+  Website ist von überall erreichbar.
+
+`impressum.html` bleibt für alle drei Länder unverändert — für die Schweiz
+verlangt Art. 3 Abs. 1 lit. s UWG Identität und Kontaktadresse inkl. E-Mail, was
+die vorhandenen Angaben erfüllen.
+
+### Offen: Vertreter in der Schweiz (Art. 14 revDSG)
+
+**Derzeit ist bewusst keiner bestellt.** Die Pflicht greift nur, wenn die
+Bearbeitung *umfangreich* **und** *regelmässig* **und** *mit hohem Risiko*
+verbunden ist — alle drei kumulativ. Gesundheitsdaten erfüllen das
+Risiko-Kriterium sicher; „umfangreich“ zielt auf Massenbearbeitung und ist bei
+einer jungen App plausibel nicht erfüllt.
+
+**Neu bewerten, sobald die Schweizer Nutzerbasis spürbar wird** — das ist der
+Zweck dieses Eintrags: die Entscheidung ist datierbar getroffen, nicht vergessen
+worden. Wird ein Vertreter bestellt, gehören Name und Schweizer Adresse in
+`datenschutz.html` Abschnitt 13.
+
 ## Lokal ansehen
 
 ```bash
