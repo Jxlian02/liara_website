@@ -17,7 +17,7 @@ Ordner hier wird von Flutter nicht angefasst.
 | `assets/wordmark.png` | Wortmarke im Seitenkopf — **lokale Kopie** von `assets/images/wordmark.png` | — |
 | `assets/favicon.png` | Tab-Icon und Apple-Touch-Icon (180 px, aus dem App-Icon) | — |
 | `assets/og-image.png` | Vorschaubild beim Teilen (1200 × 630, Wortmarke auf Ivory) | — |
-| `assets/screen-*.png/.jpg` | Produkt-Screenshots auf der Startseite — siehe „Screenshots erneuern" | — |
+| `assets/screen-*.png/.jpg` | drei Produkt-Screenshots auf der Startseite (Auswahl aus den App-Store-Motiven) — siehe „Screenshots erneuern" | — |
 
 ## Die eine Regel
 
@@ -87,55 +87,6 @@ ist ein Impressumsservice gemacht — Voraussetzung ist, dass der Dienst zur
 Entgegennahme von Post und Zustellungen beauftragt ist und der Vertrag läuft.
 Endet er, fällt die Grundlage der Angabe weg und die Adresse muss ersetzt werden.
 
-## Geltungsbereich DE · AT · CH
-
-Die App erscheint im App Store in **Deutschland, Österreich und der Schweiz**.
-Die Rechtstexte tragen alle drei Länder in *einem* deutschsprachigen Dokument —
-bewusst ohne Länderversionen, die auseinanderlaufen würden.
-
-**Österreich braucht keine eigenen Angaben.** Der Anbieter ist in Deutschland
-niedergelassen, damit gilt das Herkunftslandprinzip der E-Commerce-Richtlinie
-(in Österreich § 20 ECG): kein österreichisches ECG-/Mediengesetz-Impressum,
-keine WKO- oder Gewerbeordnungs-Angaben. Die DSGVO gilt ohnehin identisch, und
-„Beschwerde bei **einer** Datenschutz-Aufsichtsbehörde“ in Datenschutz
-Abschnitt 2 deckt die österreichische DSB mit ab — **DON'T** das nicht zu einer
-Behördenliste ausbauen, die Aufzählung wäre enger als die offene Formulierung.
-
-**Die Schweiz ist nicht EU/EWR** — weder Herkunftslandprinzip noch DSGVO greifen
-dort als maßgebliches Regime. Deshalb:
-
-- `datenschutz.html` Abschnitt 13 ordnet die Bearbeitung nach **revDSG** ein
-  (Rechte nach Art. 25/28/32, besonders schützenswerte Personendaten nach
-  Art. 5 lit. c, Aufsicht EDÖB in Bern).
-- Abschnitte 3 und 7 nennen neben dem EU-US auch das **Swiss-US Data Privacy
-  Framework**. Die drei Stellen hängen zusammen — wird eine geändert, müssen
-  die anderen mit.
-- `nutzungsbedingungen.html` Abschnitt 12: **Art. 120 Abs. 2 IPRG** schließt bei
-  Konsumentenverträgen eine Rechtswahl ganz aus. Der allgemeine Vorbehalt
-  zwingender Verbraucherschutzvorschriften (Rom I Art. 6 Abs. 2, richtig für AT)
-  trägt für die Schweiz nicht weit genug, deshalb steht das dort ausdrücklich.
-- `nutzungsbedingungen.html` Abschnitt 8 führt die Notfallnummern **je Land**.
-  `112` gilt in allen dreien, `0800 111 0 111` und `116 117` nur in Deutschland.
-  Die Nummern stehen unabhängig von den freigeschalteten Store-Ländern da: die
-  Website ist von überall erreichbar.
-
-`impressum.html` bleibt für alle drei Länder unverändert — für die Schweiz
-verlangt Art. 3 Abs. 1 lit. s UWG Identität und Kontaktadresse inkl. E-Mail, was
-die vorhandenen Angaben erfüllen.
-
-### Offen: Vertreter in der Schweiz (Art. 14 revDSG)
-
-**Derzeit ist bewusst keiner bestellt.** Die Pflicht greift nur, wenn die
-Bearbeitung *umfangreich* **und** *regelmässig* **und** *mit hohem Risiko*
-verbunden ist — alle drei kumulativ. Gesundheitsdaten erfüllen das
-Risiko-Kriterium sicher; „umfangreich“ zielt auf Massenbearbeitung und ist bei
-einer jungen App plausibel nicht erfüllt.
-
-**Neu bewerten, sobald die Schweizer Nutzerbasis spürbar wird** — das ist der
-Zweck dieses Eintrags: die Entscheidung ist datierbar getroffen, nicht vergessen
-worden. Wird ein Vertreter bestellt, gehören Name und Schweizer Adresse in
-`datenschutz.html` Abschnitt 13.
-
 ## Lokal ansehen
 
 ```bash
@@ -162,42 +113,56 @@ Endung aus (`/datenschutz`); beide Formen führen dann ans Ziel.
 
 ## Screenshots erneuern
 
-`assets/screen-session.png`, `screen-home.png` und `screen-categories.jpg` sind
-echte Aufnahmen aus dem iOS-Simulator (iPhone 17 Pro, 1206 × 2622, auf 580 px
-Breite herunterskaliert).
+Die drei Bilder der Startseite sind eine **Auswahl aus den Rohaufnahmen der
+App-Store-Screenshots** — ohne Headline und Karte, weil die Seite den nackten
+Screenshot mit eigenem Rahmen zeigt (`style.css`, `.shot`). Aufgenommen werden
+sie ausschließlich über `tools/store_shots/capture.sh` (iPhone 17 Pro Max,
+1320 × 2868, Rohaufnahmen in `build/store_shots/raw/`). Wie das Skript hinter
+das Router-Gate kommt und warum es dafür temporär in `lib/` schreibt, steht in
+`tools/store_shots/README.md`. **DON'T** dafür kein zweites Handverfahren
+pflegen — die beiden Beschreibungen liefen sonst auseinander.
 
-Sie liegen **hinter dem Router-Gate** (Onboarding → Personalizing → Ready →
-Paywall), und ein Seeding der SharedPreferences von außen funktioniert nicht.
-Der Weg, der funktioniert — alle drei Eingriffe sind **temporär und dürfen nie
-committet werden**:
+```bash
+tools/store_shots/capture.sh              # alle Motive, oder z. B. `capture.sh categories`
+node tools/store_shots/render.mjs         # Store-Bilder gleich mit nachziehen
+```
 
-1. In `lib/main.dart` direkt nach `SharedPreferences.getInstance()` einen
-   fertigen `UserModel` als JSON unter `lucky_me_user` ablegen (alle Gate-Flags
-   auf `true`, `isPremium: true`, Name, `goalCategories`, `streakDays`).
-2. In `lib/router/router.dart` am Ende des `redirect` die Zielroute erzwingen:
-   `const shotTarget = AppRoutes.session; return location == shotTarget ? null : shotTarget;`
-   — **nicht** über `initialLocation`: iOS stellt die zuletzt besuchte Route
-   wieder her, wodurch `initialLocation` still ignoriert wird (auch nach einem
-   Hot Restart und nach einem kompletten Neustart der App).
-3. `xcrun simctl status_bar <udid> override --time "9:41" --batteryState charged
-   --batteryLevel 100 --cellularBars 4 --wifiBars 3` für eine saubere
-   Statusleiste, danach `xcrun simctl io <udid> screenshot <datei>.png`.
+Danach auf 580 px Breite skalieren (ergibt 580 × 1260 — so steht es in den
+`width`/`height`-Attributen von `index.html`):
 
-Zwischen zwei Motiven genügt es, `shotTarget` zu ändern und im laufenden
-`flutter run` ein Hot Restart (`R`) auszulösen. Danach `git checkout -- lib/`
-und `xcrun simctl status_bar <udid> clear`.
+| Rohaufnahme | Website-Datei |
+|---|---|
+| `02-streak.png` | `assets/screen-home.png` |
+| `03-categories.png` | `assets/screen-categories.jpg` |
+| `04-category.png` | `assets/screen-category.jpg` |
 
-Skalieren: `sips --resampleWidth 580 <quelle> --out <ziel>`. Die beiden flächigen
-Screens bleiben PNG, das bildlastige Kategorie-Raster wird JPEG
-(`-s format jpeg -s formatOptions 80`) — sonst ist die Datei um ein Vielfaches
-größer.
+Der flächige Home-Screen bleibt PNG (`sips --resampleWidth 580 <quelle> --out <ziel>`),
+die beiden bildlastigen werden JPEG (zusätzlich `-s format jpeg -s formatOptions 80`)
+— als PNG wären sie um ein Vielfaches größer. Bei neuem Bildinhalt die
+`alt`-Texte in `index.html` mitziehen: sie beschreiben, was tatsächlich zu sehen
+ist.
 
-## Danach
+## Verdrahtung in der App
 
-Die URLs müssen noch verdrahtet werden (bewusst noch nicht erledigt):
+Die drei Rechtstext-URLs liegen an **einer** Stelle: `lib/config/legal_config.dart`
+(`LegalConfig.privacyPolicy` / `.terms` / `.imprint`, alle unter `baseUrl`).
+`test/legal_links_test.dart` prüft Schema und Domain — ein Domainwechsel ist
+eine Zeile, und eine zurückgebliebene Adresse fällt im Test auf.
 
-- `lib/screens/backup/backup_prompt_screen.dart` → `kPrivacyPolicyUrl` steht auf
-  `https://google.com` — **Release-Blocker**
-- Rechtslinks im Profil ergänzen (`lib/screens/profile/profile_screen.dart`)
+Erledigt:
+
+- `backup_prompt_screen.dart` nutzt `LegalConfig.privacyPolicy`. Der frühere
+  Platzhalter zeigte auf `https://google.com` — ausgerechnet auf dem Screen, der
+  die DSGVO-Einwilligung einholt. **DON'T** den Link dort nie wieder hinter eine
+  `isEmpty`-Bedingung legen: ohne einsehbare Erklärung ist die Einwilligung
+  nicht informiert.
+- Profil → Abschnitt „Rechtliches" mit allen drei Links
+  (`profile_screen.dart`, `_buildLegalCard`).
+
+Noch offen:
+
+- `lib/screens/update/force_update_screen.dart` → `kAppStoreUrl` bleibt leer,
+  bis die App gelistet ist (der Screen sperrt auch ohne Button).
 - RevenueCat-Dashboard → Paywall-Footer: Datenschutz- und Terms-Link
-- App Store Connect → Privacy-Policy-URL, Support-URL, Lizenzvereinbarung
+- App Store Connect → Privacy-Policy-URL, Support-URL, Lizenzvereinbarung,
+  Länderverfügbarkeit DE/AT/CH

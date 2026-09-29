@@ -475,7 +475,11 @@ footer.site .sep {
   }
 
   .shots {
-    grid-template-columns: repeat(3, 66%);
+    /* Eine Wisch-Leiste statt zweier Reihen: die Spalten entstehen implizit,
+       so viele wie es Motive gibt. */
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 66%;
     gap: 14px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
